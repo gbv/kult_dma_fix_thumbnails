@@ -1,4 +1,4 @@
-var debugMode = true;
+var debugMode = false;
 var thumbnailList = [];
 var objectCounter = 0;
 var listLength = 0;
@@ -17,7 +17,7 @@ $( document ).ready( function() {
     .done(function( objectList ) {
       logToPage("debug","Document is ready. JSON loaded.");
       thumbnailList = objectList.response.docs;
-      if (debugMode) logToConsole(thumbnailList);
+      logToConsole(thumbnailList);
       listLength = objectList.response.docs.length;
       logToPage("debug", listLength+" Objects with thumbnails found. Start image check.");
       checkImage();
@@ -26,6 +26,7 @@ $( document ).ready( function() {
 });
 
 function checkImage() {
+  adjustProgressbar();
   // if there are still images to check
   if ( objectCounter < listLength ) {
     // get current PI and its thumbnail image name
@@ -72,6 +73,12 @@ function checkImage() {
     logToPage("result", "Diese URls gefunden und repariert.");
     logToPage("result", "{"+errorList.join(', ')+"}");
   }
+}
+
+function adjustProgressbar() {
+  let currentPercent = Math.round((objectCounter*100)/listLength);
+  $(".progress-bar").attr("style", "width:"+currentPercent+"%");
+  $(".progress-text").text(objectCounter+"/"+listLength);
 }
 
 function logToPage( channel, output ) {
