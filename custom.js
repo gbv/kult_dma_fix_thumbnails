@@ -40,13 +40,13 @@ function checkImage() {
     // check image status
     if (img.complete) {
       // image works, nothing to do
-      // check next image
+      // check next image, after results were delivered
       objectCounter++;
       checkImage();
     } else {
       img.onload = () => {
         // image works, nothing to do
-        // check next image
+        // check next image, after results were delivered
         objectCounter++;
         checkImage();
       };
@@ -60,7 +60,7 @@ function checkImage() {
         // fix url
         let fixThumbnailUrl = thumnailUrl + "?ignoreCache";
         img.src = fixThumbnailUrl;
-        // check next image
+        // check next image, after results were delivered
         objectCounter++;
         checkImage();
       }
